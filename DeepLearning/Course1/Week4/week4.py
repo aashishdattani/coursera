@@ -38,7 +38,7 @@ def initialize_parameters_deep(layer_dims):
     L = len(layer_dims)  # number of layers in the network
 
     for l in range(1, L):
-        parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l - 1]) * 0.01
+        parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l - 1])  / np.sqrt(layer_dims[l-1])
         parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
 
         assert (parameters['W' + str(l)].shape == (layer_dims[l], layer_dims[l - 1]))
@@ -240,10 +240,8 @@ if __name__ == "__main__":
     train_x = train_x_flatten / 255.
     test_x = test_x_flatten / 255.
 
-    n_x = 12288  # num_px * num_px * 3
-    n_h = 7
-    n_y = 1
-    layers_dims = (n_x, n_h, n_y)
-    parameters = two_layer_model(train_x, train_y, layers_dims=(n_x, n_h, n_y), num_iterations=2500, print_cost=True)
+    layers_dims = [12288, 20, 7, 5, 1] #  4-layer model
+    parameters = L_layer_model(train_x, train_y, layers_dims, num_iterations = 2500, print_cost = True)
+
 
 
